@@ -158,7 +158,7 @@ var Q=[
 ];
 var V={
  a:{name:"atzig",de:{tag:"Selber machen: bauen, schrauben, upcyceln, gärtnern, reparieren, eigene Projekte umsetzen.",roles:["Werktage: bauen und werkeln","Upcycling, Repair-Café und Garten","Kunst und dein eigenes Projekt im Speicher"]},en:{tag:"Make it yourself: build, tinker, upcycle, garden, repair, run your own projects.",roles:["Werktage (work days): building and making","Upcycling, repair café and garden","Art and your own project in the Speicher"]}},
- f:{name:"f*tzig",de:{tag:"Raum nehmen: Bar schmeißen, Einlass machen, Bühne rocken, laut posten, sich für nichts entschuldigen.",roles:["Konzerte: Bar, Einlass, Kasse","Bühne und Technik","Social Media, Fotos, Plakate"]},en:{tag:"Take up space: run the bar, work the door, rock the stage, post it loud, apologise for nothing.",roles:["Concerts: bar, door, box office","Stage and tech","Social media, photos, posters"]}},
+ f:{name:"f*tzig",de:{tag:"Stimmung machen: Bar schmeißen, Einlass machen, Sound mischen, Licht fahren, die Veranstaltung am Laufen halten.",roles:["Konzerte: Bar, Einlass, Kasse","Bühne und Technik","Social Media, Fotos, Plakate"]},en:{tag:"Set the mood: run the bar, work the door, mix the sound, run the lights, keep the event going.",roles:["Concerts: bar, door, box office","Stage and tech","Social media, photos, posters"]}},
  m:{name:"mausig",de:{tag:"Zusammenbringen: Bands empfangen, Neue willkommen heißen, Nachbarschaft vernetzen, zuhören, für alle da sein.",roles:["Artist Care: Bands und Artists aus aller Welt empfangen","Nachbarschaft und Hafen: mitreden, mitgestalten","Neue Leute willkommen heißen"]},en:{tag:"Bring people together: welcome bands, greet newcomers, connect the neighbourhood, listen, be there for everyone.",roles:["Artist care: welcoming bands and artists from all over","Neighbourhood and harbour: have a say, shape it","Welcoming new people"]}}
 };
 var KEYS=["a","f","m"];
@@ -178,7 +178,7 @@ function tri(){var c={a:0,f:0,m:0},A=S.ans.filter(Boolean),n=A.length||1;A.forEa
  +'<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="9" fill="#111"/><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="16" fill="none" stroke="#111" stroke-width="1.5"/></svg>'
  +KEYS.map(function(j){return '<button class="corner c-'+j+'" data-open="'+j+'" aria-expanded="'+(S.open===j)+'"><b class="pc">'+pc[j]+' %</b> '+esc(V[j].name)+' <span aria-hidden="true">'+(S.open===j?'−':'+')+'</span></button>'}).join("")
  +'</div><p class="small hint">'+l.tap+'</p>'
- +(S.open?'<div class="panel"><h3>'+esc(V[S.open].name)+'</h3><p>'+V[S.open][S.lang].tag+'</p>'+roles(S.open)+'</div>':'')}
+ +(S.open?'<div class="panel"><h3>'+esc(V[S.open].name)+'</h3><p>'+V[S.open][S.lang].tag+'</p></div>':'')}
 function form(){var l=L(),f=S.form,e=S.error;
  return '<form class="stack" id="f" novalidate>'
  +'<div class="field"><label class="label" for="fn">'+l.name+'</label><input id="fn" name="vorname" autocomplete="given-name" value="'+esc(f.vorname)+'"'+(e==="vorname"?' aria-invalid="true"':'')+'></div>'
