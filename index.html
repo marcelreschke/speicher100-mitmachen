@@ -16,12 +16,14 @@
 }
 *{box-sizing:border-box}
 html,body{background:var(--paper);color:var(--ink);margin:0}
-body{font-family:var(--sans);font-size:16px;line-height:1.45;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+body{font-family:var(--sans);font-size:16px;line-height:1.45;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
 button,input{font:inherit;color:inherit}
 button{cursor:pointer}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.wrap{max-width:460px;margin:0 auto}
+.wrap{max-width:460px;margin:0 auto;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;padding-bottom:28px}
+/* Step content sits between header and footer; centered vertically when the screen is taller than the content. */
+.step{margin-block:auto;padding-block:20px;width:100%;max-width:560px;align-self:center}
 .top{display:flex;justify-content:space-between;align-items:center;padding-block:14px;gap:12px}
 .mark{font-weight:700;letter-spacing:.14em;font-size:13px;display:flex;align-items:center}
 .mark img{height:30px;width:auto;display:block}
@@ -56,7 +58,15 @@ ul.roles li::before{content:"";position:absolute;left:2px;top:15px;width:7px;hei
 .bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--ink)}
 .vibe{font-size:clamp(56px,18vw,84px);font-weight:700;letter-spacing:-.04em;line-height:.9}
-.foot{margin-top:28px;display:flex;gap:16px;flex-wrap:wrap}
+.foot{margin-top:8px;display:flex;gap:16px;flex-wrap:wrap}
+@media (min-width:900px){
+ .wrap{max-width:1080px}
+ h1{font-size:64px}
+ .step.intro{max-width:none;display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
+ .step.wide{max-width:none}
+ .vibes{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+ .step.wide>.btn.primary,.step.wide>.link{max-width:560px;width:100%}
+}
 @media (prefers-reduced-motion:no-preference){.fade{animation:f .25s ease-out}@keyframes f{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}}
 </style>
 </head>
@@ -110,14 +120,14 @@ function form(){var l=L(),f=S.form,e=S.error;
  +(e?'<p class="err" role="alert">'+l.errs[e]+'</p>':'')
  +'<button class="btn primary" type="submit"'+(S.sending?" disabled":"")+'>'+(S.sending?l.sending:l.send)+'</button></form>'}
 function view(){var l=L(),h=head();
- if(S.step==="intro")h+='<div class="stack fade"><img class="house" src="'+HOUSE+'" alt=""><h1>'+l.title+'</h1><p>'+l.sub+'</p><button class="btn primary" data-act="vibes">'+l.start+'</button><button class="link" data-act="direct">'+l.noquiz+'</button></div>';
- else if(S.step==="vibes")h+='<div class="stack fade"><h2>'+l.vibesTitle+'</h2><p class="small">'+l.vibesSub+'</p><div class="vibes">'+KEYS.map(function(k){return '<article><h3>'+esc(V[k].name)+'</h3><p>'+V[k][S.lang].tag+'</p>'+roles(k)+'</article>'}).join("")+'</div><button class="btn primary" data-act="quiz">'+l.toQuiz+'</button><button class="link" data-act="direct">'+l.noquiz+'</button></div>';
- else if(S.step==="quiz"){var q=Q[S.i];h+='<div class="stack fade"><div class="bar"><i style="width:'+(S.i/Q.length*100)+'%"></i></div><p class="label">'+l.q+' '+(S.i+1)+' '+l.of+' '+Q.length+'</p><h2>'+esc(q[S.lang])+'</h2>'
+ if(S.step==="intro")h+='<div class="stack fade step intro"><img class="house" src="'+HOUSE+'" alt=""><div class="stack"><h1>'+l.title+'</h1><p>'+l.sub+'</p><button class="btn primary" data-act="vibes">'+l.start+'</button><button class="link" data-act="direct">'+l.noquiz+'</button></div></div>';
+ else if(S.step==="vibes")h+='<div class="stack fade step wide"><h2>'+l.vibesTitle+'</h2><p class="small">'+l.vibesSub+'</p><div class="vibes">'+KEYS.map(function(k){return '<article><h3>'+esc(V[k].name)+'</h3><p>'+V[k][S.lang].tag+'</p>'+roles(k)+'</article>'}).join("")+'</div><button class="btn primary" data-act="quiz">'+l.toQuiz+'</button><button class="link" data-act="direct">'+l.noquiz+'</button></div>';
+ else if(S.step==="quiz"){var q=Q[S.i];h+='<div class="stack fade step"><div class="bar"><i style="width:'+(S.i/Q.length*100)+'%"></i></div><p class="label">'+l.q+' '+(S.i+1)+' '+l.of+' '+Q.length+'</p><h2>'+esc(q[S.lang])+'</h2>'
   +q.o.map(function(o){return '<button class="btn" data-ans="'+o[0]+'">'+esc(S.lang==="de"?o[1]:o[2])+'</button>'}).join("")
   +(S.i>=1?'<button class="link" data-act="result">'+l.skip+'</button>':'')+'</div>'}
- else if(S.step==="result"){var k=score(S.ans);h+='<div class="stack fade"><p class="label">'+l.you+'</p><div class="vibe">'+esc(V[k].name)+'</div><p>'+V[k][S.lang].tag+'</p><p class="label" style="margin-top:8px">'+l.at+'</p>'+roles(k)+'<p class="small">'+l.offer+'</p><h2 style="margin-top:12px">'+l.join+'</h2>'+form()+'</div>'}
- else if(S.step==="direct")h+='<div class="stack fade"><h2>'+l.directTitle+'</h2><p class="small">'+l.offer+'</p>'+form()+'<button class="link" data-act="intro">'+l.back+'</button></div>';
- else if(S.step==="sent")h+='<div class="stack fade"><h2>'+l.sent+'</h2><p>'+l.sentSub+'</p><a class="btn primary" href="https://www.instagram.com/speicher_100/" target="_blank" rel="noopener">'+l.insta+'</a><button class="link" data-act="reset">'+l.again+'</button></div>';
+ else if(S.step==="result"){var k=score(S.ans);h+='<div class="stack fade step"><p class="label">'+l.you+'</p><div class="vibe">'+esc(V[k].name)+'</div><p>'+V[k][S.lang].tag+'</p><p class="label" style="margin-top:8px">'+l.at+'</p>'+roles(k)+'<p class="small">'+l.offer+'</p><h2 style="margin-top:12px">'+l.join+'</h2>'+form()+'</div>'}
+ else if(S.step==="direct")h+='<div class="stack fade step"><h2>'+l.directTitle+'</h2><p class="small">'+l.offer+'</p>'+form()+'<button class="link" data-act="intro">'+l.back+'</button></div>';
+ else if(S.step==="sent")h+='<div class="stack fade step"><h2>'+l.sent+'</h2><p>'+l.sentSub+'</p><a class="btn primary" href="https://www.instagram.com/speicher_100/" target="_blank" rel="noopener">'+l.insta+'</a><button class="link" data-act="reset">'+l.again+'</button></div>';
  return h+foot()}
 function render(){document.getElementById("app").innerHTML=view();document.documentElement.lang=S.lang}
 function readForm(){var g=function(id){return document.getElementById(id)};if(!g("f"))return;
