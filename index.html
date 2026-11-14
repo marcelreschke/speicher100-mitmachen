@@ -89,7 +89,7 @@ ul.roles li{padding-block:clamp(7px,1vh,12px)}
 ul.roles li::before{top:calc(clamp(7px,1vh,12px) + .72em - 5px)}
 .vibes article{gap:calc(var(--gap) * .4)}
 .vibe{font-size:clamp(56px,calc(6vw + 4vh),160px)}
-.foot{margin-top:0;padding-block:clamp(16px,3vh,40px);gap:clamp(16px,2vw,36px)}
+.foot{margin-top:0;padding-block:clamp(16px,3vh,40px);gap:clamp(8px,1.2vh,14px) clamp(16px,2vw,36px);justify-content:center}
 .tri{position:relative;width:min(100%,340px);margin:calc(var(--gap) * .6) auto 0;padding:34px 0 46px}
 .tri svg{display:block;width:100%;height:auto}
 .corner{position:absolute;border:0;background:var(--paper);padding:4px 6px;font-weight:700;font-size:calc(var(--fs) * 1.1);white-space:nowrap;text-decoration:underline dotted;text-underline-offset:5px}
@@ -113,7 +113,8 @@ ul.roles li::before{top:calc(clamp(7px,1vh,12px) + .72em - 5px)}
 }
 /* Landscape desktop: house left, text right. Tall desktop windows keep the stacked layout, just bigger. */
 @media (min-width:900px) and (min-aspect-ratio:5/4){
- .step.intro{max-width:none;display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(48px,6vw,128px);align-items:center}
+ .step.intro{max-width:none;display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(40px,5vw,112px);align-items:center}
+ .step.intro h1{font-size:clamp(40px,calc(2.7vw + 2.4vh),96px)}
  .step.intro .house{max-height:70vh}
 }
 @media (min-width:900px){
